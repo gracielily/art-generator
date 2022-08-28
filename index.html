@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Art Generator</title>
+    <style media="screen">
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript">
+
+      const width = window.screen.width;;
+      const height = window.screen.height;;
+      const boxWidth = 30;
+      const boxHeight = 30;
+      let artIterationCount = 0;
+
+      function drawGrid() {
+        // Draws grid of cells filling the entire width and the height of the display
+        for (i = 0; i < width; i+= boxWidth) {
+          for (j = 0; j < height; j+= boxHeight) {
+            drawRandomCell(i, j);
+          }
+        }
+        // keep a tally of how many new iterations of art were created
+        artIterationCount += 1;
+      }
+
+      function drawRandomCell(x, y) {
+        // draw cell background
+        fillWithRandomColor();
+        ctx.fillRect(x, y, boxWidth, boxHeight);
+
+        let randomNumber = Math.floor(Math.random() * 18) + 1;
+        console.log(randomNumber)
+
+        switch (randomNumber) {
+          case 1:
+            drawEye(x, y);
+
+            console.log("drawing eye")
+            break;
+          default:
+
+        }
+    }
+
+    function fillWithRandomColor(){
+      let randomColor = Math.floor(Math.random()*16777215).toString(16);
+      ctx.fillStyle = "#" + randomColor;
+    }
+
+    function drawEye(x, y) {
+      ctx.fillStyle = "#fff";
+      ctx.beginPath();
+      ctx.arc(x + boxWidth/2, y + boxHeight/2, boxWidth/2, 0, 2 * Math.PI);
+      ctx.fill();
+      fillWithRandomColor();
+      ctx.beginPath();
+      ctx.arc(x + boxWidth/2, y + boxHeight/2, boxWidth/4, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = "#000";
+      ctx.beginPath();
+      ctx.arc(x + boxWidth/2, y + boxHeight/2, boxWidth/8, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+//       ctx.beginPath();
+// ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+// ctx.stroke();
+    drawGrid()
+    </script>
+  </body>
+</html>
